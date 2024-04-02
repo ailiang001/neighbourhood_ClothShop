@@ -18,9 +18,12 @@ function App() {
 
 
   const loadBlockchainData = async () => {
-    const accounts = await window.ethereum.request({method: 'eth_requestAccounts' });
-    const account = ethers.utils.getAddress(accounts[0])
-    setAccount(account)
+    // Connect to blockchain 
+
+    // Connect to smart contracts 
+
+    // Load products 
+
     // console.log(account)
   }
 
@@ -32,7 +35,6 @@ function App() {
     <div>
       <Navigation account={account} setAccount={setAccount} />
       <h2>Welcome to Neighbourhood ClothShop</h2>
-
     </div>
   );
 }

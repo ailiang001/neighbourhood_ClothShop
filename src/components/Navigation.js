@@ -3,7 +3,9 @@ import { ethers } from 'ethers';
 const Navigation = ({ account, setAccount }) => {
 
     const connectHandler = async () => {
-        console.log("connecting...")
+        const accounts = await window.ethereum.request({method: 'eth_requestAccounts' });
+        const account = ethers.utils.getAddress(accounts[0])
+        setAccount(account)
     }
 
     return (
@@ -15,20 +17,24 @@ const Navigation = ({ account, setAccount }) => {
             
             </input>
 
-            <button type="button" className='nav__connect'>
-                {account.slice(0,6) + '...' + account.slice(37,42)}
-            </button>
+            {account ? (
+                 <button type="button" className='nav__connect'>
+                    {account.slice(0,6) + '...' + account.slice(37,42)}
+                 </button>
+                    
+            ): (
+                <button type="button" className='nav__connect' 
+                onClick={connectHandler}>
+                 Connect
+                </button>
+            )}
 
-            {/* <ul className='nav__links'>
+            <ul className='nav__links'>
                 <li><a href="#Business Casual">Business Casual</a></li>
                 <li><a href="#Formal Occasions">Formal Occasions</a></li>
                 <li><a href="#HighBeast">HighBeast</a></li>
-            </ul> */}
-            {/* <ul className='nav__links'>
-                <li><a href="#Business Casual">Business Casual</a></li>
-                <li><a href="#Formal Occasions">Formal Occasions</a></li>
-                <li><a href="#HighBeast">HighBeast</a></li>
-            </ul> */}
+            </ul>
+           
 
         </nav>
     );
