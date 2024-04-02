@@ -13,11 +13,25 @@ import Dappazon from './abis/Dappazon.json'
 import config from './config.json'
 
 function App() {
+  //adding the ability to save account status 
+  const [account, setAccount] = useState(null)
+
+
+  const loadBlockchainData = async () => {
+    const accounts = await window.ethereum.request({method: 'eth_requestAccounts' });
+    const account = ethers.utils.getAddress(accounts[0])
+    setAccount(account)
+    // console.log(account)
+  }
+
+  useEffect(() => {
+    loadBlockchainData()
+  }, [])
 
   return (
     <div>
-
-      <h2>Welcome to Dappazon</h2>
+      <Navigation account={account} setAccount={setAccount} />
+      <h2>Welcome to Neighbourhood ClothShop</h2>
 
     </div>
   );
