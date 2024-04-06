@@ -14,12 +14,16 @@ import config from './config.json'
 
 function App() {
   //adding the ability to save account status 
+  const [provider, setProvider] = useState(null)
+
   const [account, setAccount] = useState(null)
 
 
   const loadBlockchainData = async () => {
-    // Connect to blockchain 
-
+    // Use Ethers to connect to blockchain 
+    // Better wallet connection especially when there's multiple wallet: refer to this link: https://docs.metamask.io/wallet/how-to/connect/
+    const provider = new ethers.providers.Web3Provider(window.ethereum)
+    setProvider(provider)
     // Connect to smart contracts 
 
     // Load products 
@@ -39,4 +43,4 @@ function App() {
   );
 }
 
-export default App;
+export default Ap
