@@ -26,7 +26,7 @@ function App() {
     setProvider(provider)
     // Connect to smart contracts 
 
-    // Load products 
+    // Load products ; address is deployed contract 
 
     // console.log(account)
   }
@@ -43,4 +43,4 @@ function App() {
   );
 }
 
-export default Ap
+export default App
