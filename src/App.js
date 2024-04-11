@@ -19,6 +19,9 @@ function App() {
 
   const [account, setAccount] = useState(null)
 
+  const [busnsCasual, setBusnsCasual] = useState(null)
+  const [fomalOccsns, setFomalOccsns] = useState(null)
+  const [highBeast, setHighBeast] = useState(null)
 
   const loadBlockchainData = async () => {
     // Use Ethers to connect to blockchain 
@@ -48,6 +51,15 @@ function App() {
     
     console.log(items)
 
+    // const busnsCasual = item.filter((item) => item.category === '')
+    // const busnsCasual = item.filter((item) => item.category === '')
+    // const busnsCasual = item.filter((item) => item.category === '')
+  
+    // setBusnsCasual()
+    // setFomalOccsns()
+    // setHighBeast()
+
+
   }
 
   useEffect(() => {
@@ -58,6 +70,8 @@ function App() {
     <div>
       <Navigation account={account} setAccount={setAccount} />
       <h2>Welcome to Neighbourhood ClothShop</h2>
+
+
     </div>
   );
 }
