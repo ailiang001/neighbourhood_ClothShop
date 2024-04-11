@@ -44,7 +44,7 @@ function App() {
     const items = []
 
     for (var i = 0; i < 9; i++){
-      const item = await neighbourhoodClothShop.items(i +1)
+      const item = await neighbourhoodClothShop.items(i +1) // "items" in abi
       items.push(item)
     }
 
