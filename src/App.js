@@ -7,7 +7,7 @@ import Section from './components/Section'
 import Product from './components/Product'
 
 // ABIs
-import Dappazon from './abis/Dappazon.json'
+import NeighbourHood from './abis/NeighbourHood.json'
 
 // Config
 import config from './config.json'
@@ -36,7 +36,7 @@ function App() {
     // Connect to smart contracts (Create JS version)
     // VAR address: the address of the ethereum contract i want to interact with, which should come from 
     // deployed smart contract?
-    const neighbourhoodClothShop = new ethers.Contract(config[network.chainId].homestead.address, Dappazon, provider)
+    const neighbourhoodClothShop = new ethers.Contract(config[network.chainId].homestead.address, NeighbourHood, provider)
 
     setNeighbourhoodClothShop(neighbourhoodClothShop)
     // Load products 
@@ -76,5 +76,4 @@ function App() {
   );
 }
 
-export default App
 export default App
