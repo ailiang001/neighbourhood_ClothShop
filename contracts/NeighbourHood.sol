@@ -17,9 +17,17 @@ contract NeighbourHood {
 
     }
 
+     struct Order{
+        uint256 time;
+        Item item;
+    }
+
     // Save the Item to the blockchain after mapping unique id to each item
     //"items" can be accessed from frontend 
     mapping(uint256 => Item) public items;
+    mapping(address => uint256) public orderCount; //(address of buyer, orderCount received)
+    mapping(address => mapping(uint256 => Order)) public allOrders; //(address of buyer, orderCount)
+
 
     event List (string name, uint256 cost, uint256 quantity);
     modifier onlyOwner(){
@@ -57,9 +65,18 @@ contract NeighbourHood {
 
     }
 
-    // ----------------------------------------2. Buy Products START ------------------------------------------------
-    function buy(uint256 _id) public {
+    // ----------------------------------------2. Buy Products START ----------------------------------------------------------------
+    function buy(uint256 _id) public payable { //"payable" allows people send ethers to the smart contract which owner can access
+        //Fetch an item
+        Item memory item = items[_id];
+
         // Create an order 
+        Order memory order = Order(block.timestamp, item);
+
+     
+        // Add order for user
+        orderCount[msg.sender]++;
+        // Save order to chain 
 
         // Receive Notifcation 
 
@@ -67,10 +84,6 @@ contract NeighbourHood {
 
         // Emit Event 
 
-
-        // Receive Crypto 
-
-        // Create an order 
 
 
     }

@@ -76,7 +76,39 @@ describe("NeighbourHood", () => {
 
   })
 
+  describe("Buying", ()=>{
+    let transaction 
+    //declare propertities for items
+    const ID = 1
+    const NAME = "Shoes"
+    const CATEGORY = "Business Casual"
+    const IMAGE = "https://ipfs.io/ipfs/QmTYEboq8raiBs7GTUg2yLXB3PMz6HuBNgNfSZBx5Msztg/shoes.jpg"
+    const COST = tokens(1)
+    const RATING = 4
+    const STOCK = 5
 
-  // getSigners : get those fake accounts ethers created for you
+    beforeEach(async ( ) => {
+      //List an item
+      transaction = await neighbourhood.connect(deployer).list(ID,NAME,CATEGORY,IMAGE,COST,RATING,STOCK )
+      await transaction.wait() //waiting for transaction to finish deploy before runs "Returns item attributes"
+
+      // Buy an item 
+      transaction = await neighbourhood.connect(buyer).buy(ID, { value: COST })
+      await transaction.wait()
+    })
+
+    it("Updates the contract balance", async () => {
+      const result = await ethers.provider.getBalance(neighbourhood.address)
+      console.log(result)
+      expect(result).to.equal(COST)
+    })
+    
+    //Emit: 1. Get notifications when someone subscribe to this event. 2. Fetch event stream to see the sales of a product
+    it('Emit List event', async() => {
+      expect(transaction).to.emit(neighbourhood, "List")
+    })
+
+  })
+
 
 })
