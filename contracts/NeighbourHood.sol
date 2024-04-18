@@ -22,7 +22,10 @@ contract NeighbourHood {
     mapping(uint256 => Item) public items;
 
     event List (string name, uint256 cost, uint256 quantity);
-
+    modifier onlyOwner(){
+        require(msg.sender == owner); // if the address is the owner (who owns this smart contract)
+        _;
+    }
 
     constructor(){
         owner = msg.sender; // the person deploying the contract to blockchain
@@ -30,7 +33,7 @@ contract NeighbourHood {
 
 
     // Functionalities this smart contract will have:
-    // 1. List products 
+    // ----------------------------------------1. List products ------------------------------------------------
     function list(uint256 _id, 
         string memory _name,
         string memory _category,
@@ -38,9 +41,9 @@ contract NeighbourHood {
         uint256 _cost,
         uint256 _rating,
         uint256 _stock // in stock | Out of Stock
-    ) public {
-        //True will continue running, False will stop
-        require(msg.sender == owner); // if the address is the owner (who owns this smart contract)
+    ) public onlyOwner(){
+        //Set a condition before this function executes (True will continue running, False will stop)
+        
 
         // Create Item Struct 
         Item memory item = Item(_id,_name,_category,_image,_cost,_rating,_stock);
@@ -53,8 +56,29 @@ contract NeighbourHood {
 
 
     }
-    // 2. Buy Products 
-    // 3. Withdraw funds 
+
+    // ----------------------------------------2. Buy Products START ------------------------------------------------
+    function buy(uint256 _id) public {
+        // Create an order 
+
+        // Receive Notifcation 
+
+        // Deduct Crypto 
+
+        // Emit Event 
+
+
+        // Receive Crypto 
+
+        // Create an order 
+
+
+    }
+
+    // ----------------------------------------3. Withdraw funds START------------------------------------------------
+    
+    
+    
 
     
 }
