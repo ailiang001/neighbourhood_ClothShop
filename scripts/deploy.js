@@ -13,6 +13,36 @@ const tokens = (n) => {
 
 async function main() {
 
+  // Setup accounts
+  const [deployer] = await ethers.getSigners()
+
+  // Deploy NeighbourHood
+  const NeighbourHood = await hre.ethers.getContractFactory("NeighbourHood")
+  const neighbourhood = await NeighbourHood.deploy()
+  await neighbourhood.deployed()
+
+  console.log(`Deployed NeighbourHood Contract at: ${neighbourhood.address}\n`)
+
+  // By deploying these items onto the blockchain, you would be able to display them onto the website
+
+
+  // Listing items... items[i] is calling items.json
+  for (let i = 0; i < items.length; i++) {
+    const transaction = await neighbourhood.connect(deployer).list(
+      items[i].id,
+      items[i].name,
+      items[i].category,
+      items[i].image,
+      tokens(items[i].price),
+      items[i].rating,
+      items[i].stock,
+    )
+
+    await transaction.wait()
+
+    console.log(`Listed item ${items[i].id}: ${items[i].name}`)
+  }
+
 }
 
 // We recommend this pattern to be able to use async/await everywhere

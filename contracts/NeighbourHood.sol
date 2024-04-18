@@ -28,8 +28,10 @@ contract NeighbourHood {
     mapping(address => uint256) public orderCount; //(address of buyer, orderCount received)
     mapping(address => mapping(uint256 => Order)) public allOrders; //(address of buyer, orderCount)
 
-
+    // Call events
+    event Buy(address buyer, uint256 orderId, uint256 itemId);
     event List (string name, uint256 cost, uint256 quantity);
+
     modifier onlyOwner(){
         require(msg.sender == owner); // if the address is the owner (who owns this smart contract)
         _;
@@ -42,7 +44,8 @@ contract NeighbourHood {
 
     // Functionalities this smart contract will have:
     // ----------------------------------------1. List products ------------------------------------------------
-    function list(uint256 _id, 
+    function list(
+        uint256 _id, 
         string memory _name,
         string memory _category,
         string memory _image, // images are stored on ipfs, we store url of images on blockchain
@@ -70,6 +73,13 @@ contract NeighbourHood {
         //Fetch an item
         Item memory item = items[_id];
 
+        //@TOADD
+        // Require enough ether to buy item
+        require(msg.value >= item.cost);
+
+        // Require item is in stock
+        require(item.stock > 0);
+
         // Create an order 
         Order memory order = Order(block.timestamp, item);
 
@@ -77,20 +87,24 @@ contract NeighbourHood {
         // Add order for user
         orderCount[msg.sender]++;
         // Save order to chain 
+        allOrders[msg.sender][orderCount[msg.sender]] = order;
+        
 
         // Receive Notifcation 
 
         // Deduct Crypto 
-
+        items[_id].stock = item.stock - 1;
         // Emit Event 
-
-
+        emit Buy(msg.sender, orderCount[msg.sender], item.id);
 
     }
 
     // ----------------------------------------3. Withdraw funds START------------------------------------------------
     
-    
+    function withdraw() public onlyOwner {
+        (bool success, ) = owner.call{value: address(this).balance}("");
+        require(success);
+    }
     
 
     
