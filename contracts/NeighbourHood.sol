@@ -2,13 +2,13 @@
 pragma solidity ^0.8.9;
 
 contract NeighbourHood {
-    //state variable: written onto the blockchain
+    // State variable: written onto the blockchain
     address public owner; // the person who owns the store (who can see the funds of purchases)
-    // save the funds information to the wallet
+    // Save the funds information to the wallet
 
     struct Item{
         uint256 id;
-        string name;
+        string  name;
         string  category;
         string  image;
         uint256 cost;

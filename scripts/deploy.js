@@ -13,7 +13,7 @@ const tokens = (n) => {
 
 async function main() {
 
-  // Setup accounts
+  // Setup accounts. (Signers are Ethereum account that has the ability to sign transactions)
   const [deployer] = await ethers.getSigners()
 
   // Deploy NeighbourHood

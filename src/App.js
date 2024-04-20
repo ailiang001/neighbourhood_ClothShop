@@ -19,9 +19,9 @@ function App() {
 
   const [account, setAccount] = useState(null)
 
-  const [electronics, setElectronics] = useState(null)
-  const [clothing, setClothing] = useState(null)
-  const [toys, setToys] = useState(null)
+  // const [electronics, setElectronics] = useState(null)
+  // const [clothing, setClothing] = useState(null)
+  // const [toys, setToys] = useState(null)
 
   const [item, setItem] = useState({})
   const [toggle, setToggle] = useState(false)
@@ -46,8 +46,8 @@ function App() {
     console.log(network)
 
     // Connect to smart contracts (Create JS version)
-    // VAR address: the address of the ethereum contract i want to interact with, which should come from 
-    // deployed smart contract?
+    // Reading the smart contract address where I want to access information from. E.g., items available in store. 
+    // In App.js, you will access info on 'neighbourhood' Contract through the abi file
     const neighbourhood = new ethers.Contract(config[network.chainId].unknown.address, NeighbourHood, provider)
 
     setNeighbourhoodClothShop(neighbourhood)
@@ -63,21 +63,21 @@ function App() {
     
     console.log(items)
 
-    // const busnsCasual = item.filter((item) => item.category === '')
-    // const busnsCasual = item.filter((item) => item.category === '')
-    // const busnsCasual = item.filter((item) => item.category === '')
+    const busnsCasual = item.filter((item) => item.category === 'business casual')
+    const fomalOccsns = item.filter((item) => item.category === 'formal ocassions')
+    const highBeast = item.filter((item) => item.category === 'high street')
   
-    // setBusnsCasual()
-    // setFomalOccsns()
-    // setHighBeast()
+    setBusnsCasual(busnsCasual)
+    setFomalOccsns(fomalOccsns)
+    setHighBeast(highBeast)
 
-    const electronics = items.filter((item) => item.category === 'electronics')
-    const clothing = items.filter((item) => item.category === 'clothing')
-    const toys = items.filter((item) => item.category === 'toys')
+    // const electronics = items.filter((item) => item.category === 'business casual')
+    // const clothing = items.filter((item) => item.category === 'formal ocassions')
+    // const toys = items.filter((item) => item.category === 'high street')
 
-    setElectronics(electronics)
-    setClothing(clothing)
-    setToys(toys)
+    // setElectronics(electronics)
+    // setClothing(clothing)
+    // setToys(toys)
 
 
   }
@@ -89,18 +89,18 @@ function App() {
   return (
     <div>
       <Navigation account={account} setAccount={setAccount} />
-      <h2>Welcome to Neighbourhood ClothShop</h2>
+      <h2>Welcome to Neighbourhood Shop</h2>
 
-      {electronics && clothing && toys && (
+      {busnsCasual && fomalOccsns && highBeast && (
         <>
-          <Section title={"Clothing & Jewelry"} items={clothing} togglePop={togglePop} />
-          <Section title={"Electronics & Gadgets"} items={electronics} togglePop={togglePop} />
-          <Section title={"Toys & Gaming"} items={toys} togglePop={togglePop} />
+          <Section title={"Business Clothing"} items={busnsCasual} togglePop={togglePop} />
+          <Section title={"Formal Ocassions"} items={fomalOccsns} togglePop={togglePop} />
+          <Section title={"Street Wear"} items={highBeast} togglePop={togglePop} />
         </>
       )}
 
       {toggle && (
-        <Product item={item} provider={provider} account={account} dappazon={dappazon} togglePop={togglePop} />
+        <Product item={item} provider={provider} account={account} neighbourhood={neighbourhood} togglePop={togglePop} />
       )}
 
     </div>
